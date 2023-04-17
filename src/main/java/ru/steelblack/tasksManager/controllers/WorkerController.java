@@ -2,9 +2,12 @@ package ru.steelblack.tasksManager.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import ru.steelblack.tasksManager.models.Worker;
-import ru.steelblack.tasksManager.services.workerService.WorkerService;
+import ru.steelblack.tasksManager.services.workersServices.WorkerService;
 
 @RestController
 @RequestMapping("/workers")

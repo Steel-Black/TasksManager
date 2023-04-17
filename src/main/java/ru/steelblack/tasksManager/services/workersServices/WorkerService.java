@@ -1,4 +1,4 @@
-package ru.steelblack.tasksManager.services.workerService;
+package ru.steelblack.tasksManager.services.workersServices;
 
 import ru.steelblack.tasksManager.models.Worker;
 

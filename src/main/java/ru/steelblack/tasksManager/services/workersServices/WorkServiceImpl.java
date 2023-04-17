@@ -1,4 +1,4 @@
-package ru.steelblack.tasksManager.services.workerService;
+package ru.steelblack.tasksManager.services.workersServices;
 
 import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;

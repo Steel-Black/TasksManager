@@ -1,5 +1,6 @@
 package ru.steelblack.tasksManager.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.File;
@@ -10,8 +11,8 @@ public class Worker {
     private long id;
 
     private String name;
-
-    private int position;
+    @JsonProperty(value = "status")
+    private Position position;
 
     private File avatar;
 }

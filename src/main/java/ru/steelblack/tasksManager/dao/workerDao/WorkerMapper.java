@@ -1,6 +1,7 @@
 package ru.steelblack.tasksManager.dao.workerDao;
 
 import org.springframework.jdbc.core.RowMapper;
+import ru.steelblack.tasksManager.models.Position;
 import ru.steelblack.tasksManager.models.Worker;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class WorkerMapper implements RowMapper<Worker> {
 
         worker.setId(resultSet.getInt("id"));
         worker.setName(resultSet.getString("name"));
-        worker.setPosition(resultSet.getInt("position"));
+        worker.setPosition(Position.valueOf(resultSet.getString("position")));
         worker.setAvatar((File)resultSet.getObject("avatar"));
 
         return worker;
