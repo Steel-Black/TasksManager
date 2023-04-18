@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.steelblack.tasksManager.config.dataBase.DataBaseProperties;
 
 import javax.sql.DataSource;
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("ru.steelblack.tasksManager")
+@EnableTransactionManagement
 public class SpringConfig {
     private final DataBaseProperties dataBaseProperties;
 

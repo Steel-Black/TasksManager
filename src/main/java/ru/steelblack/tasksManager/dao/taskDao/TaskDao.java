@@ -4,6 +4,7 @@ package ru.steelblack.tasksManager.dao.taskDao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
 import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
 import ru.steelblack.tasksManager.dto.TaskDto.TaskDtoMapper;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Component
 @Log4j2
+@Transactional
 public class TaskDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -72,6 +74,7 @@ public class TaskDao {
     }
 
     public List<TaskDto> getAllTasksByWorkerId(int id) {
+
       return jdbcTemplate.query("select * from tasks where performer=?", new Object[]{id}, dtoMapper);
     }
 }

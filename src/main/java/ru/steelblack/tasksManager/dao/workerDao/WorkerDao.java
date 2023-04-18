@@ -3,12 +3,14 @@ package ru.steelblack.tasksManager.dao.workerDao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.steelblack.tasksManager.models.worker.Worker;
 
 import java.util.Optional;
 
 @Component
 @Log4j2
+@Transactional
 public class WorkerDao {
 
     private final JdbcTemplate jdbcTemplate;

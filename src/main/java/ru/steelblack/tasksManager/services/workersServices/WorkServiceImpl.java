@@ -35,8 +35,14 @@ public class WorkServiceImpl implements WorkerService{
     }
     @Override
     public WorkerDto getWorker(int id) {
+
         Worker worker = workerDao.getWorker(id);
+        if (worker == null){
+            return new WorkerDto();
+        }
+
         List<TaskDto> listList = taskService.getAllTasksByWorkerId((int)worker.getId());
+
         return new WorkerDto(worker, listList);
     }
 }

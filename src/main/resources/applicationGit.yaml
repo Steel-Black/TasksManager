@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    username: your_login
-    password: your_password
-    url: your_url

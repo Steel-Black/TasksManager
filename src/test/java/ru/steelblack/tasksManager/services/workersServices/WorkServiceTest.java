@@ -8,6 +8,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
+import ru.steelblack.tasksManager.models.worker.BaseImage;
+import ru.steelblack.tasksManager.models.worker.Position;
 import ru.steelblack.tasksManager.models.worker.Worker;
 import ru.steelblack.tasksManager.services.tasksServices.TaskService;
 
@@ -26,7 +28,14 @@ class WorkServiceTest {
     private TaskService taskService;
     @BeforeEach
     void setUp() {
-          workerService = new WorkServiceImpl(workerDao, taskService);
+        Worker worker = new Worker();
+        worker.setAvatar(new BaseImage());
+        worker.setName("testWorker");
+        worker.setPosition(Position.MANAGER);
+
+        workerService.addWorker(worker);
+
+        workerService = new WorkServiceImpl(workerDao, taskService);
     }
 
     @Test

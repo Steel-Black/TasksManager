@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    username: postgres
+    password: 529220GT
+    url: jdbc:postgresql://localhost:5432/tasks_manager?useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true

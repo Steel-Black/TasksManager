@@ -60,6 +60,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getTaskById(int id) {
+        Task task = taskDao.getTaskById(id);
+        if (task == null){
+            return new Task();
+        }
         return taskDao.getTaskById(id);
     }
 
