@@ -1,5 +1,6 @@
 package ru.steelblack.tasksManager.services.tasksServices;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.taskDao.TaskDao;
 import ru.steelblack.tasksManager.dto.TaskDto;
@@ -10,7 +11,9 @@ import ru.steelblack.tasksManager.services.queueServices.QueueService;
 import java.util.Date;
 import java.util.List;
 
+
 @Service
+@Log4j2
 public class TaskServiceImpl implements TaskService {
 
     private static final int MAX_SIZE = 11;
@@ -34,7 +37,6 @@ public class TaskServiceImpl implements TaskService {
             if (queue.size() >= MAX_SIZE){
                 addTasksToDB();
             }
-
     }
 
     @Override
@@ -44,6 +46,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTasksToDB() {
+        if (queue.size() == 0){
+            log.error("Очередь не заполнена");
+        }
         for (int i = 0; i < COUNT_OF_TASKS; i++){
             Task task = queue.poll();
             if (task==null){

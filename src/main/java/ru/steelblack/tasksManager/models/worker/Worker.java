@@ -3,8 +3,6 @@ package ru.steelblack.tasksManager.models.worker;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.io.File;
-
 @Data
 public class Worker {
 
@@ -14,5 +12,14 @@ public class Worker {
     @JsonProperty(value = "status")
     private Position position;
 
-    private File avatar;
+    private Image avatar;
+
+    public Image getAvatar() {
+        if (avatar == null){
+            avatar = new BaseImage();
+        }
+        return avatar;
+    }
+
+
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import ru.steelblack.tasksManager.models.worker.BaseImage;
 import ru.steelblack.tasksManager.models.worker.Position;
 import ru.steelblack.tasksManager.models.worker.Worker;
 
@@ -28,6 +29,7 @@ class WorkerDaoTest {
         Worker worker = new Worker();
         worker.setName(name);
         worker.setPosition(position);
+        worker.setAvatar(new BaseImage());
         return worker;
     }
 

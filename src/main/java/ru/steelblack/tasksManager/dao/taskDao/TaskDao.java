@@ -1,6 +1,7 @@
 package ru.steelblack.tasksManager.dao.taskDao;
 
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
@@ -9,16 +10,20 @@ import ru.steelblack.tasksManager.dto.TaskDtoMapper;
 import ru.steelblack.tasksManager.models.task.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class TaskDao{
+@Log4j2
+public class TaskDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final WorkerDao workerDao;
+    private final TaskMapper mapper;
 
-    public TaskDao(JdbcTemplate jdbcTemplate, WorkerDao workerDao) {
+    public TaskDao(JdbcTemplate jdbcTemplate, WorkerDao workerDao, TaskMapper mapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.workerDao = workerDao;
+        this.mapper = mapper;
     }
 
     public List<TaskDto> getAllTasks() {
@@ -27,10 +32,17 @@ public class TaskDao{
 
     public void addTasksToDB(Task task) {
         new Thread(() -> saveTask(task)).start();
-      }
+    }
 
     public Task getTaskById(int id) {
-       return jdbcTemplate.query("select * from tasks where id=?", new Object[]{id}, new TaskMapper(workerDao)).stream().findAny().orElse(null);
+        Optional<Task> optionalTask = jdbcTemplate.query("select * from tasks where id=?", new Object[]{id}, mapper).stream().findAny();
+        Task task = null;
+        if (optionalTask.isPresent()) {
+            task = optionalTask.get();
+        } else {
+            log.error("Task not found");
+        }
+        return task;
     }
 
     public void updateTask(int id, Task task) {
@@ -43,8 +55,10 @@ public class TaskDao{
     }
 
     public void appointWorker(int id, int workerId) {
-        if (workerDao.getWorker(workerId) != null){
-        jdbcTemplate.update("update tasks set performer=? where id=?",workerId, id);}
+        if (workerDao.getWorker(workerId) == null) {
+            log.error("Worker with is ID does not exist");
+        }
+        jdbcTemplate.update("update tasks set performer=? where id=?", workerId, id);
     }
 
     private void saveTask(Task task) {

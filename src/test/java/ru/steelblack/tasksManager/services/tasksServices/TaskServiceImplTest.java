@@ -7,9 +7,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.jdbc.core.JdbcTemplate;
+import ru.steelblack.tasksManager.config.dataBase.TableCreator;
 import ru.steelblack.tasksManager.dao.taskDao.TaskDao;
+import ru.steelblack.tasksManager.dao.taskDao.TaskMapper;
+import ru.steelblack.tasksManager.models.task.Status;
 import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.queueServices.QueueService;
+
+import java.util.Date;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -22,10 +29,16 @@ class TaskServiceImplTest {
     private TaskDao taskDao;
     @Mock
     private QueueService queueService;
+
     private TaskService taskService;
+    @Mock
+    private JdbcTemplate jdbcTemplate;
+    @Mock
+    private TaskMapper mapper;
 
     @BeforeEach
     void setUp() {
+        TableCreator tableCreator = new TableCreator(jdbcTemplate);
         taskService = new TaskServiceImpl(taskDao, queueService);
     }
 
@@ -71,11 +84,24 @@ class TaskServiceImplTest {
         Task task = new Task();
         task.setTitle("title");
         task.setDescription("description");
+        task.setStatus(Status.TODO);
+        task.setTime(new Date());
+        verify(queueService).add(task);
+        int i = queueService.size();
         //when
+        verify(taskService).addTasksToDB();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        List<Task> list = verify(jdbcTemplate).query("select * from tasks where title=? and description=?", new Object[]{task.getTitle(), task.getDescription()}, mapper);
 
-        taskService.addTasksToDB();
-        //then
-        verify(taskDao).addTasksToDB(task);
+        Task taskFromDb = list.get(0);
+        task.setId(taskFromDb.getId());
+        task.setTime(taskFromDb.getTime());
+
+        assertThat(task).isEqualTo(taskFromDb);
 
     }
 

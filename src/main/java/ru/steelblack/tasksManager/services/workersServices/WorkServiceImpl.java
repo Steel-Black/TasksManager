@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
 import ru.steelblack.tasksManager.models.worker.Worker;
 
+
 @Service
 public class WorkServiceImpl implements WorkerService{
 
@@ -25,7 +26,7 @@ public class WorkServiceImpl implements WorkerService{
         workerDao.deleteWorker(id);
     }
     @Override
-    public Worker getWorker(int id){
-       return workerDao.getWorker(id);
+    public Worker getWorker(int id) {
+        return workerDao.getWorker(id);
     }
 }
