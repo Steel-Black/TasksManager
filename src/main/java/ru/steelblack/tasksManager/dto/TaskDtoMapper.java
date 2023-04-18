@@ -1,7 +1,7 @@
 package ru.steelblack.tasksManager.dto;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.steelblack.tasksManager.models.Status;
+import ru.steelblack.tasksManager.models.task.Status;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

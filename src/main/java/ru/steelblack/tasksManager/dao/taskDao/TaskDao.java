@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
 import ru.steelblack.tasksManager.dto.TaskDto;
 import ru.steelblack.tasksManager.dto.TaskDtoMapper;
-import ru.steelblack.tasksManager.models.Task;
+import ru.steelblack.tasksManager.models.task.Task;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.steelblack.tasksManager.dto.TaskDto;
-import ru.steelblack.tasksManager.models.Task;
+import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.tasksServices.TaskService;
 
 import java.util.List;

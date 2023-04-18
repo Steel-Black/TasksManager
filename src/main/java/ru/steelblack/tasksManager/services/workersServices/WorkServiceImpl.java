@@ -2,7 +2,7 @@ package ru.steelblack.tasksManager.services.workersServices;
 
 import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
-import ru.steelblack.tasksManager.models.Worker;
+import ru.steelblack.tasksManager.models.worker.Worker;
 
 @Service
 public class WorkServiceImpl implements WorkerService{
@@ -13,8 +13,8 @@ public class WorkServiceImpl implements WorkerService{
         this.workerDao = workerDao;
     }
     @Override
-    public void createWorker(Worker worker){
-        workerDao.createWorker(worker);
+    public void addWorker(Worker worker){
+        workerDao.addWorker(worker);
     }
     @Override
     public void updateWorker(Worker worker, int id){

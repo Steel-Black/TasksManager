@@ -1,10 +1,10 @@
 package ru.steelblack.tasksManager.services.workersServices;
 
-import ru.steelblack.tasksManager.models.Worker;
+import ru.steelblack.tasksManager.models.worker.Worker;
 
 public interface WorkerService {
 
-   void createWorker(Worker worker);
+   void addWorker(Worker worker);
 
    void updateWorker(Worker worker, int id);
 

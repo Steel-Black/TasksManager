@@ -1,9 +1,9 @@
-package ru.steelblack.tasksManager.models;
+package ru.steelblack.tasksManager.models.task;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import ru.steelblack.tasksManager.models.worker.Worker;
 
 import java.util.Date;
 
@@ -17,7 +17,6 @@ public class Task implements Comparable<Task> {
 
     private String description;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date time;
 
     @JsonProperty(value = "status")

@@ -3,8 +3,8 @@ package ru.steelblack.tasksManager.services.tasksServices;
 import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.taskDao.TaskDao;
 import ru.steelblack.tasksManager.dto.TaskDto;
-import ru.steelblack.tasksManager.models.Status;
-import ru.steelblack.tasksManager.models.Task;
+import ru.steelblack.tasksManager.models.task.Status;
+import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.queueServices.QueueService;
 
 import java.util.Date;

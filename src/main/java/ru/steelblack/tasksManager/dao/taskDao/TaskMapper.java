@@ -2,11 +2,12 @@ package ru.steelblack.tasksManager.dao.taskDao;
 
 import org.springframework.jdbc.core.RowMapper;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
-import ru.steelblack.tasksManager.models.Status;
-import ru.steelblack.tasksManager.models.Task;
+import ru.steelblack.tasksManager.models.task.Status;
+import ru.steelblack.tasksManager.models.task.Task;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 
 public class TaskMapper implements RowMapper<Task> {
 
@@ -21,7 +22,7 @@ public class TaskMapper implements RowMapper<Task> {
         Task task = new Task();
 
         task.setId(resultSet.getInt("id"));
-        task.setTime(resultSet.getTime("time"));
+        task.setTime(resultSet.getDate("time"));
         task.setTitle(resultSet.getString("title"));
         task.setDescription(resultSet.getString("description"));
         task.setStatus(Status.valueOf(resultSet.getString("status")));

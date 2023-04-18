@@ -1,7 +1,7 @@
 package ru.steelblack.tasksManager.services.tasksServices;
 
 import ru.steelblack.tasksManager.dto.TaskDto;
-import ru.steelblack.tasksManager.models.Task;
+import ru.steelblack.tasksManager.models.task.Task;
 
 import java.util.List;
 

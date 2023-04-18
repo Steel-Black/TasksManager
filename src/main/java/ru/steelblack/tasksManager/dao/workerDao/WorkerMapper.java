@@ -1,8 +1,8 @@
 package ru.steelblack.tasksManager.dao.workerDao;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.steelblack.tasksManager.models.Position;
-import ru.steelblack.tasksManager.models.Worker;
+import ru.steelblack.tasksManager.models.worker.Position;
+import ru.steelblack.tasksManager.models.worker.Worker;
 
 import java.io.File;
 import java.sql.ResultSet;

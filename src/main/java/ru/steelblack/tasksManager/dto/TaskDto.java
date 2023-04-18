@@ -2,7 +2,7 @@ package ru.steelblack.tasksManager.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.steelblack.tasksManager.models.Status;
+import ru.steelblack.tasksManager.models.task.Status;
 
 @Getter
 @Setter

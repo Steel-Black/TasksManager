@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.steelblack.tasksManager.models.Worker;
+import ru.steelblack.tasksManager.models.worker.Worker;
 import ru.steelblack.tasksManager.services.workersServices.WorkerService;
 
 @RestController
@@ -20,8 +20,8 @@ public class WorkerController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void createWorker(Worker worker) {
-        workerService.createWorker(worker);
+    public void addWorker(Worker worker) {
+        workerService.addWorker(worker);
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)

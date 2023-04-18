@@ -2,7 +2,7 @@ package ru.steelblack.tasksManager.dao.workerDao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.steelblack.tasksManager.models.Worker;
+import ru.steelblack.tasksManager.models.worker.Worker;
 
 @Component
 public class WorkerDao {
@@ -13,14 +13,14 @@ public class WorkerDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createWorker(Worker worker) {
+    public void addWorker(Worker worker) {
         saveWorker(worker);
     }
 
     public void updateWorker(Worker updatedWorker, int id) {
         jdbcTemplate.update("update workers set name=?, position=?, avatar=? where id=?",
                 updatedWorker.getName(),
-                updatedWorker.getPosition(),
+                updatedWorker.getPosition().toString(),
                 updatedWorker.getAvatar(),
                 id);
     }
@@ -35,10 +35,10 @@ public class WorkerDao {
         jdbcTemplate.update("delete from workers where id=?", id);
     }
 
-    public void saveWorker(Worker worker){
+    private void saveWorker(Worker worker){
         jdbcTemplate.update("insert into workers(name, position, avatar) values (?,?,?)",
                 worker.getName(),
-                worker.getPosition(),
+                worker.getPosition().toString(),
                 worker.getAvatar());
     }
 }

@@ -1,4 +1,4 @@
-package ru.steelblack.tasksManager.models;
+package ru.steelblack.tasksManager.models.worker;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
