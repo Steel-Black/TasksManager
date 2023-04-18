@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import ru.steelblack.tasksManager.config.dataBase.TableCreator;
 import ru.steelblack.tasksManager.dao.taskDao.TaskDao;
 import ru.steelblack.tasksManager.dao.taskDao.TaskMapper;
+import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
 import ru.steelblack.tasksManager.models.task.Status;
 import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.queueServices.QueueService;
@@ -155,4 +156,14 @@ class TaskServiceImplTest {
         //then
         verify(taskDao).appointWorker(eq(taskId) , eq(workerId));
     }
+    @Test
+    public void getAllTasksByWorkerIdTestMethod(){
+        int id = 1;
+        //when
+        taskService.getAllTasksByWorkerId(id);
+        //then
+        verify(taskDao).getAllTasksByWorkerId(id);
+
+    }
+
 }

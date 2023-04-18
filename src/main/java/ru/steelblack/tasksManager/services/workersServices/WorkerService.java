@@ -1,5 +1,6 @@
 package ru.steelblack.tasksManager.services.workersServices;
 
+import ru.steelblack.tasksManager.dto.WorkerDto.WorkerDto;
 import ru.steelblack.tasksManager.models.worker.Worker;
 
 public interface WorkerService {
@@ -8,7 +9,7 @@ public interface WorkerService {
 
    void updateWorker(Worker worker, int id);
 
-   Worker getWorker(int id);
+   WorkerDto getWorker(int id);
 
    void deleteWorker(int id);
 }

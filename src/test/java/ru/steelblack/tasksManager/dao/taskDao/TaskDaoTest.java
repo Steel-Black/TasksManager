@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import ru.steelblack.tasksManager.config.dataBase.TableCreator;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerMapper;
-import ru.steelblack.tasksManager.dto.TaskDto;
+import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
 import ru.steelblack.tasksManager.models.task.Status;
 import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.models.worker.BaseImage;
@@ -30,7 +30,9 @@ class TaskDaoTest {
     @Autowired
     private WorkerDao workerDao;
     @Autowired
-    private TaskMapper mapper;
+    private TaskMapper taskMapper;
+    @Autowired
+    private WorkerMapper workerMapper;
 
     @BeforeEach
     void setUp(){
@@ -69,7 +71,7 @@ class TaskDaoTest {
 
     @Test
     public void getAllTasks() {
-        int expectedCount = jdbcTemplate.query("select * from tasks", mapper).size();
+        int expectedCount = jdbcTemplate.query("select * from tasks", taskMapper).size();
         System.out.println(expectedCount);
         //when
         List<TaskDto> tasks = taskDao.getAllTasks();
@@ -79,7 +81,7 @@ class TaskDaoTest {
     }
     @Test
     public void getTaskById() {
-        long id = jdbcTemplate.query("select * from tasks", mapper).get(0).getId();
+        long id = jdbcTemplate.query("select * from tasks", taskMapper).get(0).getId();
         //when
         Task task = taskDao.getTaskById((int) id);
         //then
@@ -87,12 +89,12 @@ class TaskDaoTest {
     }
     @Test
     public void updateTask() {
-       Task task = jdbcTemplate.query("select * from tasks", mapper).get(0);
+       Task task = jdbcTemplate.query("select * from tasks", taskMapper).get(0);
        Task updatedTask = newTask("new Title", "new Desc");
         //when
        taskDao.updateTask((int)task.getId(), updatedTask);
         //then
-       Task taskAfterUpdate = jdbcTemplate.query("select * from tasks", mapper).get(0);
+       Task taskAfterUpdate = jdbcTemplate.query("select * from tasks", taskMapper).get(0);
        assertNotEquals(task.toString(), taskAfterUpdate.toString());
     }
     @Test
@@ -106,21 +108,33 @@ class TaskDaoTest {
             e.printStackTrace();
         }
         //then
-        List<Task> list = jdbcTemplate.query("select * from tasks where title=?", new Object[]{task.getTitle()}, mapper);
+        List<Task> list = jdbcTemplate.query("select * from tasks where title=?", new Object[]{task.getTitle()}, taskMapper);
 
         assertEquals(1, list.size());
     }
 
     @Test
     void appointWorker() {
-
-        Task task = jdbcTemplate.query("select * from tasks where title=?", new Object[]{"titleTest"} , mapper).get(0);
+        Task task = jdbcTemplate.query("select * from tasks where title=?", new Object[]{"titleTest"} , taskMapper).get(0);
         long id = jdbcTemplate.query("select * from workers",new WorkerMapper()).get(0).getId();
         //when
         taskDao.appointWorker((int)task.getId(), (int) id);
         //then
-        Task taskAfterAppoint = jdbcTemplate.query("select * from tasks where id=?",new Object[]{task.getId()}, mapper).get(0);
+        Task taskAfterAppoint = jdbcTemplate.query("select * from tasks where id=?",new Object[]{task.getId()}, taskMapper).get(0);
 
         assertNotEquals(task, taskAfterAppoint);
+    }
+    @Test
+    void getAllTasksByWorkerIdTest(){
+        Task task = newTask("newTask1", "todo");
+        taskDao.addTasksToDB(task);
+        Worker worker = jdbcTemplate.query("select * from workers where name=?", new Object[]{"testWorker"}, workerMapper).get(0);
+        //when
+        List<Task> expectedList = jdbcTemplate.query("select * from tasks where performer=?", new Object[]{worker.getId()}, taskMapper);
+        //then
+        List<TaskDto> actualList = taskDao.getAllTasksByWorkerId((int) worker.getId());
+
+        assertEquals(expectedList.size(), actualList.size());
+
     }
 }

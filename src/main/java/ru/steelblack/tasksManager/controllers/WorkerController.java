@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ru.steelblack.tasksManager.dto.WorkerDto.WorkerDto;
 import ru.steelblack.tasksManager.models.worker.Worker;
 import ru.steelblack.tasksManager.services.workersServices.WorkerService;
 
@@ -35,7 +36,7 @@ public class WorkerController {
     }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Worker> getWorker(@PathVariable("id")int id) {
+    public ResponseEntity<WorkerDto> getWorker(@PathVariable("id")int id) {
 
         return new ResponseEntity<>(workerService.getWorker(id), HttpStatus.OK);
     }

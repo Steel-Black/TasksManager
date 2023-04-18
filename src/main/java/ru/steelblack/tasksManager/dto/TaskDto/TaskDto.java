@@ -1,4 +1,4 @@
-package ru.steelblack.tasksManager.dto;
+package ru.steelblack.tasksManager.dto.TaskDto;
 
 import lombok.Getter;
 import lombok.Setter;

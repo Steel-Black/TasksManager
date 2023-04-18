@@ -5,8 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
-import ru.steelblack.tasksManager.dto.TaskDto;
-import ru.steelblack.tasksManager.dto.TaskDtoMapper;
+import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
+import ru.steelblack.tasksManager.dto.TaskDto.TaskDtoMapper;
 import ru.steelblack.tasksManager.models.task.Task;
 
 import java.util.List;
@@ -18,12 +18,14 @@ public class TaskDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final WorkerDao workerDao;
-    private final TaskMapper mapper;
+    private final TaskMapper taskMapper;
+    private final TaskDtoMapper dtoMapper;
 
-    public TaskDao(JdbcTemplate jdbcTemplate, WorkerDao workerDao, TaskMapper mapper) {
+    public TaskDao(JdbcTemplate jdbcTemplate, WorkerDao workerDao, TaskMapper taskMapper, TaskDtoMapper dtoMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.workerDao = workerDao;
-        this.mapper = mapper;
+        this.taskMapper = taskMapper;
+        this.dtoMapper = dtoMapper;
     }
 
     public List<TaskDto> getAllTasks() {
@@ -35,7 +37,7 @@ public class TaskDao {
     }
 
     public Task getTaskById(int id) {
-        Optional<Task> optionalTask = jdbcTemplate.query("select * from tasks where id=?", new Object[]{id}, mapper).stream().findAny();
+        Optional<Task> optionalTask = jdbcTemplate.query("select * from tasks where id=?", new Object[]{id}, taskMapper).stream().findAny();
         Task task = null;
         if (optionalTask.isPresent()) {
             task = optionalTask.get();
@@ -67,5 +69,9 @@ public class TaskDao {
                 task.getDescription(),
                 task.getTime(),
                 task.getStatus().toString());
+    }
+
+    public List<TaskDto> getAllTasksByWorkerId(int id) {
+      return jdbcTemplate.query("select * from tasks where performer=?", new Object[]{id}, dtoMapper);
     }
 }

@@ -4,7 +4,7 @@ package ru.steelblack.tasksManager.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.steelblack.tasksManager.dto.TaskDto;
+import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
 import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.tasksServices.TaskService;
 

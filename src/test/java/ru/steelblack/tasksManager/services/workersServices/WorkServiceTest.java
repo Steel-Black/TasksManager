@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.steelblack.tasksManager.dao.workerDao.WorkerDao;
 import ru.steelblack.tasksManager.models.worker.Worker;
+import ru.steelblack.tasksManager.services.tasksServices.TaskService;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -21,10 +22,11 @@ class WorkServiceTest {
     private WorkerService workerService;
     @Mock
     private WorkerDao workerDao;
-
+    @Mock
+    private TaskService taskService;
     @BeforeEach
     void setUp() {
-          workerService = new WorkServiceImpl(workerDao);
+          workerService = new WorkServiceImpl(workerDao, taskService);
     }
 
     @Test

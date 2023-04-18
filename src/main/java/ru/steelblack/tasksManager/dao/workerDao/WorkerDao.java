@@ -37,8 +37,6 @@ public class WorkerDao {
         Optional<Worker> workerOptional = jdbcTemplate.query("select * from workers where id =?",
                 new Object[]{id},
                 mapper).stream().findAny();
-        System.out.println(workerOptional.isEmpty());
-
         if (workerOptional.isPresent()) {
             worker = workerOptional.get();
         }

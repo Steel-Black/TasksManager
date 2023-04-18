@@ -3,7 +3,7 @@ package ru.steelblack.tasksManager.services.tasksServices;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.taskDao.TaskDao;
-import ru.steelblack.tasksManager.dto.TaskDto;
+import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
 import ru.steelblack.tasksManager.models.task.Status;
 import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.queueServices.QueueService;
@@ -70,6 +70,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void appointWorker(int id, int workerId) {
         taskDao.appointWorker(id, workerId);
+    }
+
+    public List<TaskDto> getAllTasksByWorkerId(int id){
+       return taskDao.getAllTasksByWorkerId(id);
     }
 
 }

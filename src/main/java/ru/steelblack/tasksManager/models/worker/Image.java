@@ -21,7 +21,6 @@ public class Image {
         this.name = fileName;
         try {
             bytes = Files.readAllBytes(Paths.get(IMG_DIRECTORY.concat(name)));
-            System.out.println(bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
