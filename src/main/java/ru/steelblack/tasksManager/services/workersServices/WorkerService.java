@@ -1,15 +1,16 @@
 package ru.steelblack.tasksManager.services.workersServices;
 
+import ru.steelblack.tasksManager.dto.TaskManagerResponse;
 import ru.steelblack.tasksManager.dto.WorkerDto.WorkerDto;
 import ru.steelblack.tasksManager.models.worker.Worker;
 
 public interface WorkerService {
 
-   void addWorker(Worker worker);
+   TaskManagerResponse addWorker(Worker worker);
 
-   void updateWorker(Worker worker, int id);
+   TaskManagerResponse updateWorker(Worker worker, int id);
 
    WorkerDto getWorker(int id);
 
-   void deleteWorker(int id);
+   TaskManagerResponse deleteWorker(int id);
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ru.steelblack.tasksManager.dto.TaskManagerResponse;
 import ru.steelblack.tasksManager.dto.WorkerDto.WorkerDto;
 import ru.steelblack.tasksManager.models.worker.Worker;
 import ru.steelblack.tasksManager.services.workersServices.WorkerService;
@@ -21,23 +22,22 @@ public class WorkerController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void addWorker(Worker worker) {
-        workerService.addWorker(worker);
+    public ResponseEntity<TaskManagerResponse> addWorker(Worker worker) {
+      return new ResponseEntity<>(workerService.addWorker(worker), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)
-    public void updateWorker(Worker worker, @PathVariable("id") int id) {
-        workerService.updateWorker(worker, id);
+    public TaskManagerResponse updateWorker(Worker worker, @PathVariable("id") int id) {
+       return workerService.updateWorker(worker, id);
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void deleteWorker(@PathVariable("id")int id) {
-        workerService.deleteWorker(id);
+    public TaskManagerResponse deleteWorker(@PathVariable("id")int id) {
+        return  workerService.deleteWorker(id);
     }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public ResponseEntity<WorkerDto> getWorker(@PathVariable("id")int id) {
-
         return new ResponseEntity<>(workerService.getWorker(id), HttpStatus.OK);
     }
 

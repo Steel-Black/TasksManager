@@ -1,22 +1,23 @@
 package ru.steelblack.tasksManager.services.tasksServices;
 
 import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
+import ru.steelblack.tasksManager.dto.TaskManagerResponse;
 import ru.steelblack.tasksManager.models.task.Task;
 
 import java.util.List;
 
 public interface TaskService {
-    void addTaskToQueue(Task task);
+    TaskManagerResponse addTaskToQueue(Task task);
 
     List<TaskDto> getAllTasks();
 
-    void addTasksToDB();
+    TaskManagerResponse addTasksToDB();
 
     Task getTaskById(int id);
 
-    void updateTask(int id, Task task);
+    TaskManagerResponse updateTask(int id, Task task);
 
-    void appointWorker(int id, int workerId);
+    TaskManagerResponse appointWorker(int id, int performerId);
 
     List<TaskDto> getAllTasksByWorkerId(int id);
 }

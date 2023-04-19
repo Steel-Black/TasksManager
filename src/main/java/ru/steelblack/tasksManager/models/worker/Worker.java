@@ -15,7 +15,7 @@ public class Worker {
     private Image avatar;
 
     public Image getAvatar() {
-        if (avatar == null){
+        if (avatar == null && name != null){
             avatar = new BaseImage();
         }
         return avatar;

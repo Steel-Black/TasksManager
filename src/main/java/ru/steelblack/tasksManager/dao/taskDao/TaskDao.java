@@ -10,6 +10,7 @@ import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
 import ru.steelblack.tasksManager.dto.TaskDto.TaskDtoMapper;
 import ru.steelblack.tasksManager.models.task.Task;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +35,9 @@ public class TaskDao {
         return jdbcTemplate.query("select id, status, title from tasks", new TaskDtoMapper());
     }
 
-    public void addTasksToDB(Task task) {
+    public boolean addTasksToDB(Task task) {
         new Thread(() -> saveTask(task)).start();
+        return true;
     }
 
     public Task getTaskById(int id) {
@@ -49,20 +51,28 @@ public class TaskDao {
         return task;
     }
 
-    public void updateTask(int id, Task task) {
+    public boolean updateTask(int id, Task task) {
+        if (getTaskById(id) == null){
+            log.error("task does not exist");
+            return false;
+        }
+        task.setTime(new Date());
         jdbcTemplate.update("update tasks set title=?, description=?, time=?, status=? where id=?",
                 task.getTitle(),
                 task.getDescription(),
                 task.getTime(),
                 task.getStatus().toString(),
                 id);
+        return true;
     }
 
-    public void appointWorker(int id, int workerId) {
-        if (workerDao.getWorker(workerId) == null) {
-            log.error("Worker with is ID does not exist");
+    public boolean appointWorker(int id, int performerId) {
+        if (workerDao.getWorker(performerId) == null || getTaskById(id) == null) {
+            log.error("Worker or task with is ID does not exist");
+            return false;
         }
-        jdbcTemplate.update("update tasks set performer=? where id=?", workerId, id);
+        jdbcTemplate.update("update tasks set performer=? where id=?", performerId, id);
+        return true;
     }
 
     private void saveTask(Task task) {

@@ -4,6 +4,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import ru.steelblack.tasksManager.dao.taskDao.TaskDao;
 import ru.steelblack.tasksManager.dto.TaskDto.TaskDto;
+import ru.steelblack.tasksManager.dto.TaskManagerResponse;
+import ru.steelblack.tasksManager.dto.TaskManagerResponseFailed;
 import ru.steelblack.tasksManager.models.task.Status;
 import ru.steelblack.tasksManager.models.task.Task;
 import ru.steelblack.tasksManager.services.queueServices.QueueService;
@@ -30,13 +32,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTaskToQueue(Task task) {
+    public TaskManagerResponse addTaskToQueue(Task task) {
         task.setStatus(Status.TODO);
         task.setTime(new Date());
         queue.add(task);
             if (queue.size() >= MAX_SIZE){
                 addTasksToDB();
             }
+        return new TaskManagerResponse(true);
     }
 
     @Override
@@ -45,9 +48,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTasksToDB() {
+    public TaskManagerResponse addTasksToDB() {
         if (queue.size() == 0){
             log.error("Очередь не заполнена");
+            return new TaskManagerResponseFailed(false, "Очередь не заполнена");
         }
         for (int i = 0; i < COUNT_OF_TASKS; i++){
             Task task = queue.poll();
@@ -56,24 +60,34 @@ public class TaskServiceImpl implements TaskService {
             }
             taskDao.addTasksToDB(task);
         }
+        return new TaskManagerResponse(true);
     }
 
     @Override
     public Task getTaskById(int id) {
         Task task = taskDao.getTaskById(id);
         if (task == null){
-            return new Task();
+            task = new Task();
+            log.error("task not found");
         }
-        return taskDao.getTaskById(id);
+        return task;
     }
 
     @Override
-    public void updateTask(int id, Task task) {
-        taskDao.updateTask(id, task);
+    public TaskManagerResponse updateTask(int id, Task task) {
+
+        if(taskDao.updateTask(id, task)){
+            return new TaskManagerResponse(true);
+        }
+        return new TaskManagerResponseFailed(false, "task with this id does not exist!");
     }
     @Override
-    public void appointWorker(int id, int workerId) {
-        taskDao.appointWorker(id, workerId);
+    public TaskManagerResponse appointWorker(int id, int performerId) {
+
+        if (taskDao.appointWorker(id, performerId)){
+            return new TaskManagerResponse(true);
+        }
+        return new TaskManagerResponseFailed(false, "task or worker with this id does not exist!");
     }
 
     public List<TaskDto> getAllTasksByWorkerId(int id){

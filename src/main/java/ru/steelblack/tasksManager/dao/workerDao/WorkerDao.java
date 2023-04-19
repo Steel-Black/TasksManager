@@ -26,12 +26,17 @@ public class WorkerDao {
         saveWorker(worker);
     }
 
-    public void updateWorker(Worker updatedWorker, int id) {
+    public boolean updateWorker(Worker updatedWorker, int id) {
+
+        if (getWorker(id) == null){
+            return false;
+        }
         jdbcTemplate.update("update workers set name=?, position=?, avatar=? where id=?",
                 updatedWorker.getName(),
                 updatedWorker.getPosition().toString(),
                 updatedWorker.getAvatar().getName(),
                 id);
+        return true;
     }
 
     public Worker getWorker(int id) {
@@ -48,8 +53,12 @@ public class WorkerDao {
         return worker;
     }
 
-    public void deleteWorker(int id) {
+    public boolean deleteWorker(int id) {
+        if (getWorker(id) == null){
+            return false;
+        }
         jdbcTemplate.update("delete from workers where id=?", id);
+        return true;
     }
 
     private void saveWorker(Worker worker){
